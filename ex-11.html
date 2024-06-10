@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><style>
+        body {
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+    </style>
+</head>
+<script>
+    const weatherBackgrounds = {
+        Clear: "#ffeb3b",
+        Clouds: "#90a4ae",
+        Rain: "#607d8b",
+        Drizzle: "#b0bec5",
+        Thunderstorm: "#455a64",
+        Snow: "#cfd8dc",
+        Mist: "#bdbdbd",
+        Smoke: "#757575",
+        Haze: "#8d8d8d",
+        Dust: "#b2b2b2",
+        Fog: "#9e9e9e",
+        Sand: "#e0e0e0",
+        Ash: "#616161",
+        Squall: "#78909c",
+        Tornado: "#ff8f00",
+        default: "#f0f8ff"
+    };
+
+let getInfo =  async () => {
+    console.log("hello!");
+    let city = document.getElementById('cityname').value;
+    let key = 'd72729578543cfc435344f99b226b1c9';
+    let wurl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=metric`
+    let resp = await fetch(wurl);
+    console.log(resp);
+    let data = await resp.json();
+    console.log(data);
+    let maxtemp = data.main.temp_max
+    let mintemp =  data.main.temp_min
+    console.log(maxtemp);
+    console.log(mintemp);
+    let weather = data.weather[0].main;
+    let weatherDesc = data.weather[0].description;
+    let windSpeed = data.wind.speed;
+    console.log(data.name);  
+    let wicon = data.weather[0].icon
+    let wimagesrc = "http://www.openweathermap.org/img/w/"+wicon+".png"
+
+  document.body.style.backgroundColor = weatherBackgrounds[weather] || weatherBackgrounds.default;
+
+    document.getElementById("mydiv").innerHTML = `
+                Weather today in <b>${data.name}</b> is:
+                <br> Max Temp: ${maxtemp}°C
+                <br> Min Temp: ${mintemp}°C
+                <br> Weather: ${weather}
+                <br> Weather Description: ${weatherDesc}
+                <br> Wind Speed: ${windSpeed} m/s
+                <br><img src='${wimagesrc}' alt='weather image'/>    `
+                switch (weather) {
+                    case 'Clear':  document.getElementById('mydiv').style.backgroundImage = "url('https://thenewshimachal.com/wp-content/uploads/2024/02/Shimla-weather-1.jpg')";
+                    break;
+                    case 'Clouds':  document.getElementById('mydiv').style.backgroundImage = "url('https://i0.wp.com/eos.org/wp-content/uploads/2019/09/cumulus-clouds-blue-sky.jpg?w=820&ssl=1')";
+                    break;
+                    case 'Rain':  document.getElementById('mydiv').style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFQ51e-F0qj589n55lsjuPbAKPx1G-XZJErA&s')";
+                    break;
+                    case 'Drizzle':  document.getElementById('mydiv').style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/commons/5/5b/Row_of_poplars_in_the_drizzle_-_geograph.org.uk_-_591822.jpg')";
+                    break;
+                    case 'Thunderstorm':  document.getElementById('mydiv').style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuIQxUiEp2pDBqqVtxb0cBNSxs_SaWl1ILLg&s')";
+                    break;
+                    case 'Snow':  document.getElementById('mydiv').style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgT6Mzd8w8LZKrAgruCU0ImHIMsj2xGjMUDA&s')";
+                    break;
+                    case 'Mist':  document.getElementById('mydiv').style.backgroundImage = "url('https://www.shutterstock.com/image-photo/landscape-heavy-foggy-road-winter-260nw-1594521517.jpg')";
+                    break;
+                    case 'Smoke':  document.getElementById('mydiv').style.backgroundImage = "url('https://c0.wallpaperflare.com/preview/992/147/619/weather-smoke-smog-pollution.jpg')";
+                    break;
+                    case 'Haze':  document.getElementById('mydiv').style.backgroundImage = "url('https://d2h8hramu3xqoh.cloudfront.net/blog/wp-content/uploads/2022/08/Hazy-Skies-scaled.webp";
+                    break;
+                    case 'Dust':  document.getElementById('mydiv').style.backgroundImage = "url('https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iYRMHOD.Qsu4/v0/-1x-1.jpg')";
+                    break;
+                    case 'Fog':  document.getElementById('mydiv').style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx8ptCIrH74XZ6waKsuvnE8ZTWsUnrEfj2MQ&s')";
+                    break;
+                    case 'Sand':  document.getElementById('mydiv').style.backgroundImage = "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx8ptCIrH74XZ6waKsuvnE8ZTWsUnrEfj2MQ&s')";
+                    break;
+                    case 'Ash':  document.getElementById('mydiv').style.backgroundImage = "url('https://static1.mclcm.net/iod/images/v2/114/citytheque/localite_104_130/420x190_100_300_000000x10x0.jpg')";
+                    break;
+                    case 'Squall':  document.getElementById('mydiv').style.backgroundImage = "url('https://www.noaa.gov/sites/default/files/2022-05/Squall.jpg')";
+                    break;
+                    case 'Tornado':  document.getElementById('mydiv').style.backgroundImage = "url('https://discovery.sndimg.com/content/dam/images/discovery/fullset/2020/8/24/GettyImages-1131211375.jpg.rend.hgtvcom.1280.960.suffix/1598330861228.jpeg')";
+                    break;
+                    case 'default':  document.getElementById('mydiv').style.backgroundImage = "url('https://www.bviddm.com/wp-content/uploads/2023/07/apps.16894.c02476d2-2378-4f60-8290-b6d4b3842643.79a2ef6a-4775-4c79-8d93-9caf077660eb.1bbd88a4-0a17-4750-91a0-cd7d98f58e9d.png')";
+                    break;
+
+    // Add more cases as needed
+}
+
+}
+</script>
+<body>
+ 
+    <h1 class="my-4"> Welcome to my weather App!</h1>
+    <div class="mb-3">
+        <input type="text" class="form-control" id="cityname" placeholder="Enter city name"/>
+    </div>
+<!-- Modal trigger button -->
+<button
+    type="button"
+    onclick="getInfo()"
+    class="btn btn-primary btn-lg form-control"
+    data-bs-toggle="modal"
+    data-bs-target="#modalId"
+>
+Get Weather
+</button>
+
+<!-- Modal Body -->
+<!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+<div
+    class="modal fade"
+    id="modalId"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    
+    role="dialog"
+    aria-labelledby="modalTitleId"
+    aria-hidden="true"
+>
+    <div
+        class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+        role="document"
+    >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">
+                    Weather of given city is...
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body" id="mydiv">Please Enter a city...</div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+        </div>
+    </div>
+</div>
+<script>
+        const myModal = new bootstrap.Modal(
+        document.getElementById("modalId"),
+        options,
+    );
+</script>
+</body>
+</html>
